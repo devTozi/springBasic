@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- mybatis라는 mapper -->
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 인터페이스의 전체 경로를 작성한다 -->
+<mapper namespace="com.simple.basic.mapper.TestMapper">
+	
+	<!-- 각 태그에는 id라는 속성이 들어가고 id는 추상 메서드 이름과 완전 똑같아야 함 -->
+	<!-- id는 인터페이스의 메서드명 resultType=반환 타입 -->
+	<select id="getTime" resultType="String">
+		select now()
+	</select>
+	
+	<!-- sql문 뒤에 ; 작성하지 않는다 -->
+	<!-- resultType에는 한 행에 대한 처리를 할 데이터 타입 작성 - 패키지명을 포함한 경로를 작성해야 한다 -->
+	<select id="getScore" resultType="com.simple.command.ScoreVO">
+		select*from score
+	</select>
+	
+	<select id="getOne" resultType="com.simple.command.ScoreVO">
+		select * from score where num=#{a}
+	</select>
+	
+	<!-- insert 단일 값 - resultType 적지 않는다, parameterType은 매개 변수의 타입(생략가능) -->
+	<insert id="insertOne" parameterType="string">
+		insert into score(name) values (#{name})
+	</insert>
+	
+	<insert id="insertTwo" parameterType="ScoreVO">
+		<!-- values값은 setter 명과 똑같이 입력 -->
+		insert into score(name, kor, eng) values (#{name}, #{kor}, #{eng})
+	</insert>
+
+	<insert id="insertThree">
+		insert into score(name, kor, eng) values (#{name}, #{kor}, #{eng})
+	</insert>
+	
+	<select id="selectMap" resultType="map" parameterType="int">
+		select * from score where num = #{num}		
+	</select>
+	
+	<select id="selectMap2" resultType="map">
+		select * from score
+	</select>
+	
+	<!-- alias 설정이 있다면 parameterType, resultType에 단축명으로 사용 가능 (부가기능) -->
+	<update id="updateOne" parameterType="ScoreVO">
+		update score set name=#{name}, kor= #{kor}, eng = #{eng} where num=#{num}
+	</update>
+	
+	<insert id="insertFour">
+		insert into score(name, kor) values (#{변수명1}, #{변수명2})
+	</insert>
+</mapper>

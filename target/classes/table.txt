@@ -1,0 +1,35 @@
+# < MySQL에서 사용하는 타입 >
+# varchar2 ->  varchar
+# number(10) -> int로 쓰면 가장 큰 단위까지 작성 가능
+# date -> date or timestamp(시, 분, 초까지 나타나는)
+# sequence -> auto_increment
+# 함수는 구글링해서 찾아보기
+# 조인구문은 오라클과 똑같다
+# 서브쿼리는 테이블의 별칭(alias) 필수
+
+
+#MySQL은 버전별로 대소문자를 구분할 수도, 안 할수도 있다 - 소문자로 만들었으면 소문자로 쓰고, 대문자로 만들었으면 대문자로 쓰는게 좋다
+#스키마의 Tables 우 클릭 후 create table 누르면 마우스로 테이블 생성 가능 
+create table score(
+	num int primary key auto_increment,
+    name varchar(30) not null,
+    kor int default 0,
+    eng int default 0       
+);
+# 테이블 삭제
+drop table score;
+# 테이블 확인
+select * from score;
+#마우스로 행 클릭 후 추가 가능
+insert into score (name, kor, eng) values('홍길자',30,30);
+
+#서브쿼리절 - 테이블의 alias를 무조건 작성해야 함
+select A.* 
+from (select * from score) A;
+
+#MySQL에 설정확인하는 구문 중 하나(@@autocommit - 기본적으로 활성화 되어있음(1))
+select @@autocommit;
+
+# commit 활성화, 비활성화
+set @@autocommit = 1;
+set @@autocommit = 0; 
